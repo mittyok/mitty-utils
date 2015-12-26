@@ -5,10 +5,7 @@ import com.mitty.common.annotation.MapperAnnotation;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 对象映射处理器
@@ -43,6 +40,7 @@ public class MapperAnnotationProcessor {
             return null;
 
         boolean isNotList = !(srcObject instanceof List);
+        boolean isMapObject = srcObject instanceof Map;
 
         boolean hasMapperAnnotation = hasMapperAnnotation(srcObject);
 
@@ -69,6 +67,25 @@ public class MapperAnnotationProcessor {
             }
             return newList;
         }
+
+        if (isMapObject) {
+            // 如果是一个MAP，我们必须要当根处理
+            if (!isRootObject) {
+                processor = new MapperAnnotationProcessor(mapperAnnotationClass);
+                return processor.process(srcObject);
+            } else {
+                Map map = (Map)srcObject;
+                Set keys = map.keySet();
+                for (Object key : keys) {
+                    resultMap.put(key, process(map.get(key), false));
+                }
+                return resultMap;
+            }
+
+
+
+        }
+
 
         // TODO: 2015/12/26 后续这个处理应该做缓存
         // 获取对应的注解，交给对应的处理器处理
