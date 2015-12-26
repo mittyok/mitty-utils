@@ -1,9 +1,12 @@
 package com.mitty.common.utils;
 
 import com.mitty.common.annotation.MapperAnnotation;
-import com.mitty.common.annotation.MyMapperAnnotation;
 import org.junit.Test;
 
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,5 +54,12 @@ public class MapperUtilsTest {
         public List<School> datas = new ArrayList<School>();
         @MapperAnnotation("school.old_school")
         public School oldSchool = null;
+    }
+
+    @Retention(RetentionPolicy.RUNTIME)
+    @Target(ElementType.FIELD)
+    @MapperAnnotation
+    public @interface MyMapperAnnotation {
+        String value();
     }
 }
