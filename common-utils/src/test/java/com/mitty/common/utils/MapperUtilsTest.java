@@ -38,8 +38,9 @@ public class MapperUtilsTest {
         school.oldSchool = oldSchool;
 
         Map datasMap = new HashMap();
-        datasMap.put("datas", school.datas);
+
         school.datasMap.put("school1", school.datas);
+        datasMap.put("datas", school.datasMap);
 
         System.out.println(JSONUtils.format(MapperUtils.getResultMap(datasMap, MyMapperAnnotation.class)));
 
