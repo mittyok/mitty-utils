@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+
+    <aop:aspectj-autoproxy/>
+    <context:annotation-config></context:annotation-config>
+    <context:component-scan base-package="com.mitty,test.com.mitty"/>
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+
+
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+        <property name="maxWait" value="50000"></property>
+        <property name="initialSize" value="20"></property>
+        <property name="maxIdle" value="80"></property>
+        <property name="removeAbandoned" value="true"/>
+        <property name="maxActive" value="100"></property>
+        <property name="driverClassName" value="org.h2.Driver"></property>
+        <property name="username" value="sa"></property>
+        <property name="password" value=""></property>
+        <property name="testOnBorrow" value="true"/>
+        <property name="validationQuery" value="SELECT 'X'"/>
+        <property name="url" value="jdbc:h2:./mitty_utils_test_db;AUTO_SERVER=TRUE"></property>
+
+    </bean>
+
+    <!--<bean id="druidDataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">-->
+        <!--&lt;!&ndash; 基本属性 url、user、password &ndash;&gt;-->
+        <!--<property name="driverClassName" value="com.mysql.jdbc.Driver" />-->
+        <!--<property name="url" value="jdbc:mysql://172.32.2.64:3306/huobi?useUnicode=true&amp;characterEncoding=utf8&amp;characterSetResults=utf8" />-->
+        <!--<property name="username" value="yanglei" />-->
+        <!--<property name="password" value="123456" />-->
+        <!--&lt;!&ndash; 配置初始化大小、最小、最大 &ndash;&gt;-->
+        <!--<property name="initialSize" value="5" />-->
+        <!--<property name="minIdle" value="50" />-->
+        <!--<property name="maxActive" value="50" />-->
+        <!--&lt;!&ndash; 配置获取连接等待超时的时间 &ndash;&gt;-->
+        <!--<property name="maxWait" value="60000" />-->
+        <!--&lt;!&ndash; 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 &ndash;&gt;-->
+        <!--<property name="timeBetweenEvictionRunsMillis" value="60000" />-->
+        <!--&lt;!&ndash; 配置一个连接在池中最小生存的时间，单位是毫秒 &ndash;&gt;-->
+        <!--<property name="minEvictableIdleTimeMillis" value="300000" />-->
+        <!--<property name="validationQuery" value="SELECT 'x'" />-->
+        <!--<property name="testWhileIdle" value="true" />-->
+        <!--<property name="testOnBorrow" value="false" />-->
+        <!--<property name="testOnReturn" value="false" />-->
+        <!--&lt;!&ndash; 打开PSCache，并且指定每个连接上PSCache的大小 &ndash;&gt;-->
+        <!--<property name="poolPreparedStatements" value="false" />-->
+        <!--<property name="maxPoolPreparedStatementPerConnectionSize" value="20" />-->
+        <!--&lt;!&ndash; 配置监控统计拦截的filters &ndash;&gt;-->
+        <!--<property name="filters" value="stat" />-->
+    <!--</bean>-->
+
+    <bean id="transactionManager"
+          class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <!-- 自动扫描dto目录, 省掉Configuration.xml里的手工配置，方便用户定义 -->
+        <property name="typeAliasesPackage" value="test.com.mitty.db.po" />
+        <!-- 显式指定Mapper文件位置 -->
+        <property name="mapperLocations" value="classpath:test/com/**/dao/mybatis/*Mapper.xml" />
+    </bean>
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="test.com.mitty.db.dao.mybatis"/>
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+    </bean>
+
+
+</beans>
