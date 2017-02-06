@@ -33,7 +33,7 @@
     <!--<bean id="druidDataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">-->
         <!--&lt;!&ndash; 基本属性 url、user、password &ndash;&gt;-->
         <!--<property name="driverClassName" value="com.mysql.jdbc.Driver" />-->
-        <!--<property name="url" value="jdbc:mysql://172.32.2.64:3306/huobi?useUnicode=true&amp;characterEncoding=utf8&amp;characterSetResults=utf8" />-->
+        <!--<property name="url" value="jdbc:mysql://172.32.2.64:3306/dbname?useUnicode=true&amp;characterEncoding=utf8&amp;characterSetResults=utf8" />-->
         <!--<property name="username" value="yanglei" />-->
         <!--<property name="password" value="123456" />-->
         <!--&lt;!&ndash; 配置初始化大小、最小、最大 &ndash;&gt;-->

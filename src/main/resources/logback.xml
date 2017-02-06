@@ -48,17 +48,6 @@
     	<!--<appender-ref ref="runtime_debug_appender"/>-->
     <!--</logger>-->
 	<!---->
-	<!--<logger name="com.huobi.jmatch.thread.DBOrderQueueLoaderThread" level="info"/>-->
-	<!--<logger name="com.huobi.jmatch.thread.OrderMatchThread" level="info"/>-->
-	<!--<logger name="com.huobi.jmatch.thread.EngineStatusReportThread" level="info"/>-->
-	<!---->
-    <!--<logger name="com.huobi.jmatch.service.MatchEngineService" level="info"/>-->
-    <!--<logger  name="com.huobi.jmatch.service.rules.MarketMatchRule" level="info"/>-->
-    <!--<logger name="com.huobi.jmatch.service.rules.LimitMatchRule" level="info"/>-->
-    <!--<logger name="com.huobi.jmatch.db.BalanceDAO" level="info"/>-->
-    <!--<logger name="com.huobi.jmatch.db.OrderQueueDAO" level="info"/>-->
-    <!--<logger name="com.huobi.jmatch.db.MarketOrderQueueDAO" level="info"/>-->
-    <!---->
     <!--<logger name="org.apache" level="info"/>-->
     <!--<logger name="java.sql" level="info"/>-->
     <!--<logger name="org.springframework" level="info"/>-->
